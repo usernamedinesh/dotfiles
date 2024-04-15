@@ -1,0 +1,26 @@
+[font]
+size = 16
+
+#normal = {family = "LiterationMono Nerd Font Propo"}
+# normal = {family = "JetBrainsMonoNL Nerd Font"} this is good
+# normal = {family = "JetBrainsMonoNL Nerd Font Mono"} this is also good
+normal = {family = "Hasklug Nerd Font Propo"}
+
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F11"
+
+[env]
+term = "xterm=256color"
+
+[window]
+# decorations = "none"
+# opacity = 0.5
+
+[colors]
+[colors.primary]
+  foreground = "#f8f8f2"
+  background = "#1d1005"
+  # background = "#2d2001"// this working great while transparent is onn in alacrityy
+
