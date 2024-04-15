@@ -14,13 +14,18 @@ vim.api.nvim_set_keymap("n", "<S-k>", '"+p', { noremap = true })
 --format
 vim.keymap.set("n", "<leader>fj", vim.lsp.buf.format)
 
+vim.api.nvim_set_keymap("i", "<C-j>", "<Down>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-k>", "<Up>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-h>", "<Left>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-l>", "<Right>", { noremap = true })
+
 --command mode--
 vim.api.nvim_set_keymap("n", "'", ":", { noremap = true })
 vim.api.nvim_set_option("completefunc", "completefunc#omni#syntax")
 
 --move to start and end of line
-vim.api.nvim_set_keymap("n", "E", "$", { noremap = false })
-vim.api.nvim_set_keymap("n", "B", "^", { noremap = false })
+vim.api.nvim_set_keymap("n", "sk", "$", { noremap = false })
+vim.api.nvim_set_keymap("n", "sj", "^", { noremap = false })
 
 --close cureent buffer
 vim.keymap.set("n", "ss", "<cmd>bd<CR>", { noremap = true, silent = true, desc = "Close current buffer" })
@@ -72,4 +77,4 @@ vim.keymap.set("n", "<C-]>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>ss", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/<CR>", { desc = "Jump to configuration file" })
+vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.dotfiles/nvim/<CR>", { desc = "Jump to configuration file" })

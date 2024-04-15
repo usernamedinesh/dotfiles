@@ -32,4 +32,4 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.wildignore:append({ "*/node_modules/*" })
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "100"
+-- vim.opt.colorcolumn = "100"
