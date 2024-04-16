@@ -50,8 +50,9 @@ vim.api.nvim_set_keymap("n", "<Esc>", "<cmd>noh<CR>", { noremap = true, silent =
 vim.api.nvim_set_keymap("n", "sh", "<C-w>h", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "sl", "<C-w>l", { noremap = true, silent = true })
 vim.keymap.set("i", "jf", "<Esc>")
-vim.keymap.set("v", "v", "<Esc>")
+vim.keymap.set("v", "i", "<Esc>")
 vim.keymap.set("x", "v", "<Esc>")
+vim.keymap.set("x", "e", "=")
 
 vim.api.nvim_set_keymap("n", "fj", ":w<CR>", { silent = false })
 vim.api.nvim_set_keymap("n", "<leader>q", ":q!<CR>", { silent = true })
