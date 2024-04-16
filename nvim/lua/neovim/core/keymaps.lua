@@ -28,7 +28,7 @@ vim.api.nvim_set_keymap("n", "sk", "$", { noremap = false })
 vim.api.nvim_set_keymap("n", "sj", "^", { noremap = false })
 
 --close cureent buffer
-vim.keymap.set("n", "ss", "<cmd>bd<CR>", { noremap = true, silent = true, desc = "Close current buffer" })
+vim.keymap.set("n", "so", "<cmd>bd<CR>", { noremap = true, silent = true, desc = "Close current buffer" })
 
 --page down up--
 vim.api.nvim_set_keymap("n", "<A-h>", "<C-u>zz", { noremap = true, silent = true })
