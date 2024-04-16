@@ -1,8 +1,4 @@
 
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # Aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
@@ -36,8 +32,21 @@ open_in_nvim() {
     fi
 }
 select_file_and_open_in_nvim() {
-    local selected_file=$(find . -type f \( -not -path "*/.config/*" -not -path "*/.vim/*" -not -path "*/.tmux/*" -not -path "*/.oh-my-zsh/*" -not -path "*/.themes/*" -not -path "*/.git/*" -not -path "*/target/*" -not -path "*/pkg/*" -not -path "*/.config/go/*" -not -path "*/MongoDB Compass/*" -and -not -path "*/Postman/*" -and -not -path "*/Code - OSS/*" -and -not -path "*/Code/*" -and -not -path "*/.vscode-oss/*" -and -not -path "*/.var/*" -and -not -path "*/.mozilla/*" -and -not -path "*/.mongodb/*" -and -not -path "*/.icons/*" -and -not -path "*/.codeium/*" -and -not -path "*/.npm/*" -and -not -path "*/.cargo/*" -and -not -path "*/.cache/*" -and -not -path "*/.local/*" -and -not -path "*/Downloads/*" -and -not -path "*/Pictures/*" -and -not -path "*/node_modules/*" -and -not -path "*/Videos/*" \) | fzf)
+    # local selected_file=$(find . -type f \( -not -path "*/.config/*" -not -path "*/.vim/*" -not -path "*/.tmux/*" -not -path "*/.oh-my-zsh/*" -not -path "*/.themes/*" -not -path "*/.git/*" -not -path "*/target/*" -not -path "*/pkg/*" -not -path "*/.config/go/*" -not -path "*/MongoDB Compass/*" -and -not -path "*/Postman/*" -and -not -path "*/Code - OSS/*" -and -not -path "*/Code/*" -and -not -path "*/.vscode-oss/*" -and -not -path "*/.var/*" -and -not -path "*/.mozilla/*" -and -not -path "*/.mongodb/*" -and -not -path "*/.icons/*" -and -not -path "*/.codeium/*" -and -not -path "*/.npm/*" -and -not -path "*/.cargo/*" -and -not -path "*/.cache/*" -and -not -path "*/.local/*" -and -not -path "*/Downloads/*" -and -not -path "*/Pictures/*" -and -not -path "*/node_modules/*" -and -not -path "*/Videos/*" \) | fzf)
+    # allowed_folders=("Desktop" "Server" ".dotfiles")
+    #
+    # selected_file=$(find "${allowed_folders[@]}" -type f | fzf)
+    allowed_folders=("Desktop" "server" ".dotfiles")
 
+    excluded_items=("node_modules" "cargo" "bin" "hello_cargo" "target" ".gitignore" ".git" "build" )
+
+    exclude_conditions=()
+    for item in "${excluded_items[@]}"; do
+        exclude_conditions+=("-path" "*/$item*" "-prune" "-o")
+    done
+    exclude_conditions=("${exclude_conditions[@]::${#exclude_conditions[@]}-1}")
+
+    selected_file=$(find "${allowed_folders[@]}" \( "${exclude_conditions[@]}" \) -false -o -type f | fzf)
     if [ -z "$selected_file" ]; then
         return
     fi
@@ -47,6 +56,7 @@ select_file_and_open_in_nvim() {
 
     open_in_nvim "$session_name" "$selected_file"
 }
+
 
 # Bind the function to the Alt+S key combination
 bindkey -s '^[s' 'select_file_and_open_in_nvim\n'
