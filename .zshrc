@@ -3,7 +3,15 @@
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias vim='nvim'
-
+nvim() {
+    # Check if the command matches 'nvim . -t'
+    if [[ "$1" == "." && "$2" == "-t" ]]; then
+        ~/.dotfiles/cht.sh
+    else
+        # If the command doesn't match, execute Neovim with the provided arguments
+        command nvim "$@"
+    fi
+}
 # Prompt
 PS1='[\u@\h \W]\$ '
 
@@ -31,12 +39,12 @@ open_in_nvim() {
         cd "$(dirname "$file")" && nvim "$(basename "$file")"
     fi
 }
-select_file_and_open_in_nvim() {
+Nvim() {
     # local selected_file=$(find . -type f \( -not -path "*/.config/*" -not -path "*/.vim/*" -not -path "*/.tmux/*" -not -path "*/.oh-my-zsh/*" -not -path "*/.themes/*" -not -path "*/.git/*" -not -path "*/target/*" -not -path "*/pkg/*" -not -path "*/.config/go/*" -not -path "*/MongoDB Compass/*" -and -not -path "*/Postman/*" -and -not -path "*/Code - OSS/*" -and -not -path "*/Code/*" -and -not -path "*/.vscode-oss/*" -and -not -path "*/.var/*" -and -not -path "*/.mozilla/*" -and -not -path "*/.mongodb/*" -and -not -path "*/.icons/*" -and -not -path "*/.codeium/*" -and -not -path "*/.npm/*" -and -not -path "*/.cargo/*" -and -not -path "*/.cache/*" -and -not -path "*/.local/*" -and -not -path "*/Downloads/*" -and -not -path "*/Pictures/*" -and -not -path "*/node_modules/*" -and -not -path "*/Videos/*" \) | fzf)
     # allowed_folders=("Desktop" "Server" ".dotfiles")
     #
     # selected_file=$(find "${allowed_folders[@]}" -type f | fzf)
-    allowed_folders=("Desktop" "server" ".dotfiles")
+    allowed_folders=("Desktop" "server" ".dotfiles" "personal")
 
     excluded_items=("node_modules" "cargo" "bin" "hello_cargo" "target" ".gitignore" ".git" "build" )
 
@@ -59,7 +67,7 @@ select_file_and_open_in_nvim() {
 
 
 # Bind the function to the Alt+S key combination
-bindkey -s '^[s' 'select_file_and_open_in_nvim\n'
+bindkey -s '^[s' 'Nvim\n'
 
 # Automatically source .zshrc when it's modified
 autoload -U add-zsh-hook
