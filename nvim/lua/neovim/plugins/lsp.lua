@@ -173,8 +173,8 @@ return {
 			mapping = cmp.mapping.preset.insert({
 				["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
 				["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
-				["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				["<C-f>"] = cmp.mapping.scroll_docs(4),
+				-- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+				-- ["<C-f>"] = cmp.mapping.scroll_docs(4),
 				["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
 				["<C-e>"] = cmp.mapping.abort(), -- close completion window
 				["<CR>"] = cmp.mapping.confirm({ select = true }),
@@ -254,21 +254,21 @@ return {
 			on_attach = on_attach,
 		})
 		-- configure go server
-		lspconfig["gopls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			cmd = { "gopls" },
-			filetypes = { "go", "gomod", "gowork", "gotmpl" },
-			root_dir = utils.root_pattern("go.work", "go.mod", ".git"),
-			settings = {
-				gopls = {
-					completeUnimported = true,
-					usePlaceholders = true,
-					analyses = {
-						unusedparams = true,
-					},
-				},
-			},
-		})
+		-- lspconfig["gopls"].setup({
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- 	cmd = { "gopls" },
+		-- 	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+		-- 	root_dir = utils.root_pattern("go.work", "go.mod", ".git"),
+		-- 	settings = {
+		-- 		gopls = {
+		-- 			completeUnimported = true,
+		-- 			usePlaceholders = true,
+		-- 			analyses = {
+		-- 				unusedparams = true,
+		-- 			},
+		-- 		},
+		-- 	},
+		-- })
 	end,
 }

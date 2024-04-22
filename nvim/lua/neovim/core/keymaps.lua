@@ -14,6 +14,10 @@ vim.api.nvim_set_keymap("n", "<S-k>", '"+p', { noremap = true })
 --format
 vim.keymap.set("n", "<leader>fj", vim.lsp.buf.format)
 
+-- Keymap for enabling Copilot
+vim.api.nvim_set_keymap("n", "<leader>ce", ":Copilot enable<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>cd", ":Copilot disable<CR>", { noremap = true, silent = true })
+
 vim.api.nvim_set_keymap("i", "<C-j>", "<Down>", { noremap = true })
 vim.api.nvim_set_keymap("i", "<C-k>", "<Up>", { noremap = true })
 vim.api.nvim_set_keymap("i", "<C-h>", "<Left>", { noremap = true })
@@ -30,12 +34,11 @@ vim.api.nvim_set_keymap("n", "sj", "^", { noremap = false })
 --close cureent buffer
 vim.keymap.set("n", "so", "<cmd>bd<CR>", { noremap = true, silent = true, desc = "Close current buffer" })
 
---page down up--
-vim.api.nvim_set_keymap("n", "<A-h>", "<C-u>zz", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<A-l>", "<C-d>zz", { noremap = true, silent = true })
-
+-- Navigate buffers
+vim.keymap.set("n", "<S-j>", ":bnext<CR>", { noremap = true })
+vim.keymap.set("n", "<S-l>", ":bprevious<CR>", { noremap = true })
 -- Select all
-vim.keymap.set("n", "-", "gg<S-v>G")
+vim.keymap.set("n", "si", "gg<S-v>G")
 
 --splite--
 vim.keymap.set("n", "ff", ":vsplit <CR>")
@@ -50,8 +53,8 @@ vim.api.nvim_set_keymap("n", "<Esc>", "<cmd>noh<CR>", { noremap = true, silent =
 vim.api.nvim_set_keymap("n", "sh", "<C-w>h", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "sl", "<C-w>l", { noremap = true, silent = true })
 vim.keymap.set("i", "jf", "<Esc>")
-vim.keymap.set("v", "i", "<Esc>")
-vim.keymap.set("x", "v", "<Esc>")
+vim.keymap.set("v", "o", "<Esc>")
+vim.keymap.set("x", "o", "<Esc>")
 vim.keymap.set("x", "e", "=")
 
 vim.api.nvim_set_keymap("n", "fj", ":w<CR>", { silent = false })
