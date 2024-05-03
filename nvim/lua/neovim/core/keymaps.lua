@@ -1,9 +1,14 @@
 vim.g.mapleader = " "
+
 --open-explorer
 vim.api.nvim_set_keymap("n", "<Leader>pv", ":Oil<CR>", { noremap = true, silent = true })
 --move line--
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+--indenting--
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
 --undo--
 vim.keymap.set("n", "U", "<C-r>", { noremap = true })
 vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
@@ -35,8 +40,8 @@ vim.api.nvim_set_keymap("n", "sj", "^", { noremap = false })
 vim.keymap.set("n", "so", "<cmd>bd<CR>", { noremap = true, silent = true, desc = "Close current buffer" })
 
 -- Navigate buffers
-vim.keymap.set("n", "<S-j>", ":bnext<CR>", { noremap = true })
-vim.keymap.set("n", "<S-l>", ":bprevious<CR>", { noremap = true })
+vim.keymap.set("n", "<S-l>", ":bnext<CR>", { noremap = true })
+vim.keymap.set("n", "<S-j>", ":bprevious<CR>", { noremap = true })
 -- Select all
 vim.keymap.set("n", "si", "gg<S-v>G")
 
@@ -70,7 +75,7 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 
-vim.api.nvim_set_keymap("n", "vv", "V", { silent = true })
+vim.api.nvim_set_keymap("n", "c", "V", { silent = true })
 
 vim.keymap.set("n", "<C-[>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-]>", "<cmd>cprev<CR>zz")

@@ -1,13 +1,7 @@
 return {
-	{ "kevinhwang91/nvim-bqf", ft = "qf" },
-	{ "junegunn/fzf.vim" },
-	{
-		"junegunn/fzf",
-		build = "./install --all",
-		run = function()
-			vim.fn["fzf#install"]()
-		end,
-	},
+	{ "joerdav/templ.vim" },
+	{ "christoomey/vim-tmux-navigator" },
+	-- { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 	{ "tpope/vim-fugitive" },
 	-- { "github/copilot.vim" },
 	{ "eandrju/cellular-automaton.nvim" },
@@ -19,6 +13,14 @@ return {
 	{
 		"terryma/vim-multiple-cursors",
 		-- "mg979/vim-visual-multi",
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		lazy = false,
+		config = {},
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
 	},
 
 	{
@@ -37,13 +39,6 @@ return {
 		lazy = false,
 		config = function()
 			require("Comment").setup()
-		end,
-	},
-	{
-		"rust-lang/rust.vim",
-		ft = "rust",
-		init = function()
-			vim.g.rustfmt_autosave = 1
 		end,
 	},
 
@@ -77,6 +72,7 @@ return {
 		end,
 	},
 
+	--for dotenv --
 	{
 		"laytan/cloak.nvim",
 		config = function()
@@ -99,7 +95,6 @@ return {
 	},
 
 	{
-		-- end,
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
 			"meuter/lualine-so-fancy.nvim",
@@ -108,41 +103,26 @@ return {
 		lazy = false,
 		event = { "BufReadPost", "BufNewFile", "VeryLazy" },
 		config = function()
-			-- local icons = require("config.icons")
 			require("lualine").setup({
 				options = {
 					theme = "auto",
 					component_separators = { left = "|", right = "|" },
 				},
 				sections = {
-					lualine_a = { "mode" },
+					lualine_a = {},
 					lualine_b = {
 						"fancy_branch",
 					},
-					lualine_c = {
-						{
-							"filename",
-							path = 1, -- 2 for full path
-							symbols = {
-								modified = "  ",
-								-- readonly = "  ",
-								-- unnamed = "  ",
-							},
-						},
-					},
+					lualine_c = { "buffers" },
 					lualine_y = {},
 					lualine_z = {},
 				},
 				inactive_sections = {
 					lualine_a = {},
 					lualine_b = {},
-					lualine_c = { "filename" },
-					-- lualine_x = { "location" },
 					lualine_y = {},
 					lualine_z = {},
 				},
-				tabline = {},
-				extensions = { "neo-tree", "lazy" },
 			})
 		end,
 	},
@@ -166,6 +146,7 @@ return {
 		end,
 	},
 
+	--harpoon --
 	{
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
@@ -178,7 +159,7 @@ return {
 			vim.keymap.set("n", "<leader>a", function()
 				harpoon:list():add()
 			end)
-			vim.keymap.set("n", "<C-h>", function()
+			vim.keymap.set("n", "<S-i>", function()
 				harpoon.ui:toggle_quick_menu(harpoon:list())
 			end)
 
@@ -204,6 +185,8 @@ return {
 			end)
 		end,
 	},
+
+	--nice command prompt --
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -227,57 +210,54 @@ return {
 			"MunifTanjim/nui.nvim",
 		},
 	},
-	-- breadcrumbs
+
+	-- nice top mini navbar --
 	{
-		"LunarVim/breadcrumbs.nvim",
-		config = function()
-			require("breadcrumbs").setup()
-		end,
-	},
-	-- Simple winbar/statusline plugin that shows your current code context
-	{
-		"SmiteshP/nvim-navic",
-		config = function()
-			local icons = require("neovim.core.icons")
-			require("nvim-navic").setup({
-				highlight = true,
-				lsp = {
-					auto_attach = true,
-					preference = { "typescript-tools" },
-				},
-				click = true,
-				separator = " " .. icons.ui.ChevronRight .. " ",
-				depth_limit = 0,
-				depth_limit_indicator = "..",
-				icons = {
-					File = " ",
-					Module = " ",
-					Namespace = " ",
-					Package = " ",
-					Class = " ",
-					Method = " ",
-					Property = " ",
-					Field = " ",
-					Constructor = " ",
-					Enum = " ",
-					Interface = " ",
-					Function = " ",
-					Variable = " ",
-					Constant = " ",
-					String = " ",
-					Number = " ",
-					Boolean = " ",
-					Array = " ",
-					Object = " ",
-					Key = " ",
-					Null = " ",
-					EnumMember = " ",
-					Struct = " ",
-					Event = " ",
-					Operator = " ",
-					TypeParameter = " ",
-				},
-			})
-		end,
+		"utilyre/barbecue.nvim",
+		name = "barbecue",
+		version = "*",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		dependencies = {
+			"SmiteshP/nvim-navic",
+			"nvim-tree/nvim-web-devicons",
+		},
+		opts = {
+			kinds = {
+				Array = "",
+				Boolean = "",
+				Class = "",
+				Color = "",
+				Constant = "",
+				Constructor = "",
+				Enum = "",
+				EnumMember = "",
+				Event = "",
+				Field = "",
+				File = "󰈙",
+				Folder = "",
+				Function = "",
+				Interface = "",
+				Key = "",
+				Keyword = "",
+				Method = "",
+				Module = "",
+				Namespace = "",
+				Null = "",
+				Number = "",
+				Object = "",
+				Operator = "",
+				Package = "",
+				Property = "",
+				Reference = "",
+				Snippet = "",
+				String = "",
+				Struct = "",
+				Text = "",
+				TypeParameter = "",
+				Unit = "",
+				Value = "",
+				Variable = "",
+			},
+		},
 	},
 }

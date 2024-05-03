@@ -10,6 +10,7 @@ return {
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = {
 				"vimdoc",
+				"templ",
 				"javascript",
 				"typescript",
 				"go",
@@ -20,6 +21,7 @@ return {
 				"jsdoc",
 				"bash",
 				"markdown",
+				"html",
 				"markdown_inline",
 			},
 
