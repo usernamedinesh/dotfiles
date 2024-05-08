@@ -1,6 +1,8 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	event = { "BufReadPost", "BufNewFile" },
 	build = ":TSUpdate",
+	enabled = true,
 
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
@@ -19,6 +21,7 @@ return {
 				"lua",
 				"rust",
 				"jsdoc",
+				"tsx",
 				"bash",
 				"markdown",
 				"html",

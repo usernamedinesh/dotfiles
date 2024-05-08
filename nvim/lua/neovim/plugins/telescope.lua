@@ -8,7 +8,15 @@ local M = {
 }
 
 function M.config()
+	require("telescope").setup({
+		pickers = {
+			colorscheme = {
+				enable_preview = true,
+			},
+		},
+	})
 	local telescope = require("telescope")
+
 	telescope.load_extension("fzf")
 	local builtin = require("telescope.builtin")
 	require("telescope").load_extension("git_worktree")
@@ -26,6 +34,7 @@ function M.config()
 	end, { desc = "[/] Fuzzily search in current buffer]" })
 
 	keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
+	keymap.set("n", "<leader>cf", "<cmd>Telescope colorscheme<cr>", { desc = "change colorshceme" })
 	keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 	vim.keymap.set("n", "<C-p>", builtin.git_files, {})
 	vim.keymap.set("n", "<leader>pw", function()

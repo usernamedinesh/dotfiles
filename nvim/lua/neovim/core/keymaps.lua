@@ -6,6 +6,24 @@ vim.api.nvim_set_keymap("n", "<Leader>pv", ":Oil<CR>", { noremap = true, silent 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
+vim.keymap.set("n", "<leader>sv", function()
+	vim.cmd([[
+      update $MYVIMRC
+      source $MYVIMRC
+    ]])
+	vim.notify("Nvim config successfully reloaded!", vim.log.levels.INFO, { title = "nvim-config" })
+end, {
+	silent = true,
+	desc = "reload init.lua",
+})
+
+-- Move normally between wrapped lines
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Keymaps for better default experience
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+
 --indenting--
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")

@@ -1,218 +1,104 @@
 return {
-
 	"neovim/nvim-lspconfig",
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"williamboman/mason.nvim",
-		"hrsh7th/nvim-cmp",
-		"williamboman/mason-lspconfig.nvim",
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"hrsh7th/cmp-nvim-lsp",
-		{ "antosha417/nvim-lsp-file-operations", config = true },
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-emoji",
-		"hrsh7th/cmp-cmdline",
-		"hrsh7th/nvim-cmp",
-		"L3MON4D3/LuaSnip",
-		"onsails/lspkind.nvim",
-		"rafamadriz/friendly-snippets",
-		"saadparwaiz1/cmp_luasnip",
 	},
-
+	enabled = true,
 	config = function()
-		local cmp = require("cmp")
 		local lspconfig = require("lspconfig")
-		local luasnip = require("luasnip")
-		local cmp_lsp = require("cmp_nvim_lsp")
-		local lspkind = require("lspkind")
-		local mason = require("mason")
-		local mason_lspconfig = require("mason-lspconfig")
-		local mason_tool_installer = require("mason-tool-installer")
-		local utils = require("lspconfig/util")
+		local util = require("lspconfig.util")
+		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-		--for enabling snippet like rfce
-		require("luasnip.loaders.from_vscode").lazy_load()
+		-- Disable inline error messages
+		vim.diagnostic.config({
+			virtual_text = false,
+			float = {
+				border = "single",
+			},
+		})
 
-		local capabilities = vim.tbl_deep_extend(
-			"force",
-			{},
-			vim.lsp.protocol.make_client_capabilities(),
-			cmp_lsp.default_capabilities()
-		)
+		-- Add border to floating window
+		vim.lsp.handlers["textDocument/signatureHelp"] =
+			vim.lsp.with(vim.lsp.handlers.hover, { border = "single", silent = true })
+		vim.lsp.handlers["textDocument/hover"] =
+			vim.lsp.with(vim.lsp.handlers.hover, { border = "single", silend = true })
 
-		local opts = { noremap = true, silent = true }
-		local on_attach = function(client, bufnr)
-			opts.buffer = bufnr
+		-- Make float window transparent start
 
-			-- 	-- set keybinds
-			vim.keymap.set("n", "gd", function()
-				vim.lsp.buf.definition()
-			end, opts)
-			vim.keymap.set("n", "N", function()
-				vim.lsp.buf.hover()
-			end, opts)
-			vim.keymap.set("n", "<leader>vca", function()
-				vim.lsp.buf.code_action()
-			end, opts)
-			vim.keymap.set("n", "<leader>fr", function()
-				vim.lsp.buf.references()
-			end, opts)
-			vim.keymap.set("n", "<leader>rn", function()
-				vim.lsp.buf.rename()
-			end, opts)
-			vim.keymap.set("i", "<C-h>", function()
-				vim.lsp.buf.signature_help()
-			end, opts)
-			vim.keymap.set("n", "[d", function()
-				vim.diagnostic.goto_next()
-			end, opts)
-			vim.keymap.set("n", "]d", function()
-				vim.diagnostic.goto_prev()
-			end, opts)
+		local set_hl_for_floating_window = function()
+			vim.api.nvim_set_hl(0, "NormalFloat", {
+				link = "Normal",
+			})
+			vim.api.nvim_set_hl(0, "FloatBorder", {
+				bg = "none",
+			})
 		end
 
-		mason.setup({
-			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
-				},
-			},
+		set_hl_for_floating_window()
+
+		vim.api.nvim_create_autocmd("ColorScheme", {
+			pattern = "*",
+			desc = "Avoid overwritten by loading color schemes later",
+			callback = set_hl_for_floating_window,
 		})
 
-		mason_tool_installer.setup({
-			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
-				"pylint", -- python linter
-				"eslint_d", -- js linter
-				"rustfmt", -- rust formatter
-			},
-		})
-		mason_lspconfig.setup({
-			ensure_installed = {
-				"lua_ls",
-				"tsserver",
-				"rust_analyzer",
-				"html",
-				"cssls",
-				"tailwindcss",
-				"svelte",
-				"emmet_ls",
-				"gopls",
-			},
-			automatic_installation = true,
+		-- Make float window transparent end
 
-			handlers = {
-				function(server_name) -- default handler (optional)
-					require("lspconfig")[server_name].setup({
-						capabilities = capabilities,
-					})
-				end,
+		local on_attach = function(client, bufnr)
+			vim.keymap.set(
+				"n",
+				"N",
+				vim.lsp.buf.hover,
+				{ buffer = bufnr, desc = "Show documentation for what is under cursor" }
+			)
+			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "Smart rename" })
+			vim.keymap.set(
+				{ "n", "v" },
+				"gf",
+				vim.lsp.buf.code_action,
+				{ buffer = bufnr, desc = "See available code actions" }
+			)
+			vim.keymap.set(
+				"n",
+				"<leader>d",
+				vim.diagnostic.open_float,
+				{ buffer = bufnr, desc = "Show diagnostics for line" }
+			)
 
-				["lua_ls"] = function()
-					lspconfig.lua_ls.setup({
-						capabilities = capabilities,
-						settings = {
-							Lua = {
-								-- runtime = { version = "Lua 5.1" },
-								diagnostics = {
-									globals = { "vim", "it", "describe", "before_each", "after_each" },
-								},
+			vim.keymap.set("n", "<leader>fr", function()
+				vim.lsp.buf.references()
+			end, { buffer = bufnr, desc = "show lsp references" })
+			vim.keymap.set("i", "<C-h>", function()
+				vim.lsp.buf.signature_help()
+			end, { buffer = bufnr, desc = " show lsp signature_help" })
+			vim.keymap.set("n", "[d", function()
+				vim.diagnostic.goto_next()
+			end, { buffer = bufnr, desc = " next diagnostic" })
+			vim.keymap.set("n", "]d", function()
+				vim.diagnostic.goto_prev()
+			end, { buffer = bufnr, desc = "previous diagnostic" })
+			-- vim.keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", {buffer = bufnr, desc = 'Show definition, references'})
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
+		end
 
-								workspace = {
-									-- make language server aware of runtime files
-									library = {
-										[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-										[vim.fn.stdpath("config") .. "/lua"] = true,
-									},
-								},
-							},
-						},
-					})
-				end,
-			},
+		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local signs = { Error = "E", Warn = "W", Hint = "H", Info = "I" }
+		for type, icon in pairs(signs) do
+			local hl = "DiagnosticSign" .. type
+			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+		end
+
+		-- configure typescript server with plugin
+		lspconfig["tsserver"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
 		})
 
-		-- `/` cmdline setup.
-		cmp.setup.cmdline("/", {
-			mapping = cmp.mapping.preset.cmdline(),
-			sources = {
-				{ name = "buffer" },
-			},
-		})
-
-		-- `:` cmdline setup.
-		cmp.setup.cmdline(":", {
-			mapping = cmp.mapping.preset.cmdline(),
-			sources = cmp.config.sources({
-				{ name = "path" },
-			}, {
-				{
-					name = "cmdline",
-					option = {
-						ignore_cmds = { "Man", "!" },
-					},
-				},
-			}),
-		})
-		local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-		cmp.setup({
-			snippet = {
-				expand = function(args)
-					luasnip.lsp_expand(args.body)
-				end,
-				completion = {
-					completeopt = "menu,menuone,preview,noselect",
-				},
-			},
-			mapping = cmp.mapping.preset.insert({
-				["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
-				["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
-				-- ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				-- ["<C-f>"] = cmp.mapping.scroll_docs(4),
-				["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-				["<C-e>"] = cmp.mapping.abort(), -- close completion window
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
-			}),
-
-			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
-			}, {
-				{ name = "buffer" },
-				{ name = "path" },
-				{ name = "emoji" },
-				{
-					name = "cmp-dictionary",
-					keyword_length = 2,
-					max_item_count = 5,
-					priority = 30,
-					dictionary = { filepath = "/path/to/mongodb-dictionary.json", filetype = "json" },
-				},
-			}),
-			formatting = {
-				format = lspkind.cmp_format({
-					maxwidth = 50,
-					ellipsis_char = "...",
-				}),
-			},
-		})
-
-		vim.diagnostic.config({
-			-- update_in_insert = true,
-			float = {
-				focusable = false,
-				style = "minimal",
-				border = "rounded",
-				source = "always",
-				header = "",
-				prefix = "",
-			},
+		-- configure html server
+		lspconfig["html"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
 		})
 
 		-- configure emmet server
@@ -221,13 +107,47 @@ return {
 			on_attach = on_attach,
 			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
 		})
+		-- configure angular server
+		-- lspconfig["angularls"].setup({
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- 	root_dir = util.root_pattern("angular.json", "project.json", "nx.json"),
+		-- })
 
-		-- configure typescript server
-		lspconfig["tsserver"].setup({
+		-- configure lua server (with special settings)
+		lspconfig["lua_ls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = { -- custom settings for lua
+				Lua = {
+					-- make the language server recognize "vim" global
+					diagnostics = {
+						globals = { "vim" },
+					},
+					workspace = {
+						-- make language server aware of runtime files
+						library = {
+							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+							[vim.fn.stdpath("config") .. "/lua"] = true,
+						},
+					},
+				},
+			},
+		})
+
+		lspconfig["rust_analyzer"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
-		lspconfig["rust_analyzer"].setup({
+
+		-- configure tailwindcss server
+		lspconfig["tailwindcss"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		-- configure python server
+		lspconfig["pyright"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
@@ -238,21 +158,6 @@ return {
 			on_attach = on_attach,
 		})
 
-		-- configure tailwindcss server
-		lspconfig["tailwindcss"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		-- configure html server
-		lspconfig["html"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		-- configure python server
-		lspconfig["pyright"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
 		-- configure go server
 		-- lspconfig["gopls"].setup({
 		-- 	capabilities = capabilities,
