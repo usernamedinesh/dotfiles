@@ -1,0 +1,62 @@
+icons_format = "{icon}"
+
+[theme]
+theme = "semi-native"
+
+[theme.overrides]
+good_fg = "#93a1a1"
+
+[icons]
+icons = "awesome6"
+
+[icons.overrides]
+backlight = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+
+# Bar height and other appearance settings
+[bar]
+height = 5  # Set the desired height of the bar
+position = "top"  # Can be "top" or "bottom"
+font = "pango:monospace 10"  # Customize the font and size
+padding = 10  # Set padding to make the bar more spacious
+
+[[block]]
+block = "custom"
+command = "/home/dinesh/script/i3_workspace.sh"
+interval = 1
+
+[[block]]
+block = "disk_space"
+path = "/"
+info_type = "available"
+format = " $icon $available.eng(w:4) "
+interval = 20
+warning = 20.0
+alert = 10.0
+
+[[block]]
+block = "net"
+format = " $icon {$signal_strength $ssid $frequency|Wired} $speed_up.eng(prefix:K) $speed_down.eng(prefix:K) "
+interval = 5
+
+[[block]]
+block = "backlight"
+invert_icons = false
+
+[[block]]
+block = "sound"
+[[block.click]]
+button = "left"
+# cmd = "~/.config/i3/scripts/set-default-sound-device.sh"
+
+[[block]]
+block = "battery"
+interval = 10
+format = " $icon   $percentage "
+not_charging_format = " $icon  "
+
+[[block]]
+block = "time"
+interval = 1
+[block.format]
+# full = " $icon $timestamp.datetime(f:'%Y-%m-%d %H:%M:%S(%a)') "
+full = " $icon $timestamp.datetime(f:'%Y-%m-%d %I:%M:%S %p(%a)') "
