@@ -18,7 +18,7 @@ Installation
 
 Clone this repository to your home directory (or wherever you prefer):
 
-git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+git clone https://github.com/usernamedinesh/dotfiles.git ~/dotfiles
 
 2. Symlink the dotfiles
 
