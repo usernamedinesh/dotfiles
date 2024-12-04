@@ -1,0 +1,28 @@
+[font]
+size = 11
+
+#normal = {family = "LiterationMono Nerd Font Propo"}
+# normal = {family = "JetBrainsMonoNL Nerd Font"} this is good
+# normal = {family = "JetBrainsMonoNL Nerd Font Mono"} this is also good
+# normal = {family = "TwilioSansMono-Regular"} 
+# normal = {family = "JetBrains Mono"} 
+
+
+# [env]
+# term = "xterm=256color"
+
+[window]
+decorations = "None"               # "Full" | "None" | "Transparent" | "Buttonless"
+opacity = 0.8
+startup_mode = "Fullscreen"        #  "Windowed" | "Maximized" | "Fullscreen" | "SimpleFullscreen"
+blur = true                        # true | false
+decorations_theme_variant = "Dark" #| "Light" | "None"
+
+[colors]
+transparent_background_colors = true # true | false
+# [colors.primary]
+#   foreground = "#f8f8f2"
+#   background = "#1d1005"
+# background = "#2d2001" # this working great while transparent is onn in alacrityy
+[terminal]
+osc52 = "CopyPaste"
