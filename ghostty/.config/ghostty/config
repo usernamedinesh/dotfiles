@@ -1,0 +1,8 @@
+theme = rose-pine
+background = 000000
+font-size = 16
+adjust-cell-height = 35%
+window-padding-balance = true
+window-padding-y = 0
+gtk-titlebar = false
+shell-integration-features = no-cursor,sudo,no-title

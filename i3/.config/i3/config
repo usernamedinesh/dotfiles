@@ -1,0 +1,178 @@
+#set mod to alt
+set $mod Mod1
+# font pango:monospace 10px
+# font pango:Material Icons
+font pango:Noto Color Emoji 
+
+#set wallpaper
+exec_always --no-startup-id feh --bg-scale /home/dinesh/Downloads/wall/naru1.jpg
+
+exec --no-startup-id export LC_ALL=en_IN.UTF-8
+exec --no-startup-id export LANG=en_IN.UTF-8
+
+#for screen tearing 
+exec --no-startup-id picom --config /home/dinesh/.config/i3/picom.conf
+#for starship
+exec --no-startup-id starship init zsh
+# exec --no-startup-id i3blocks -c ~/.config/i3blocks/config
+
+# Thanks Childz
+for_window [class="^.*"] border pixel 2
+                          # class                 border  backgr. text    indicator child_border
+for_window [class="^.*"] client.focused          #77dd77 #285577 #ffffff #2e9ef4   #285577
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
+bindsym $mod+p exec ghostty 
+
+# kill focused window
+bindsym $mod+q kill
+
+# start the file system
+bindsym $mod+Shift+f exec pcmanfm
+
+# start rofi (a program launcher)
+# bindsym $mod+d exec --no-startup-id rofi -show drun
+# bindsym $mod+space exec --no-startup-id rofi -show combi
+# bindsym $mod+Tab exec --no-startup-id rofi -show window
+# bindsym $mod+d exec dmenu_run -b
+bindsym $mod+d exec ~/script/dmenu_run.sh
+
+# Navigate to next/previous workspace
+bindsym $mod+k workspace next
+bindsym $mod+j workspace prev
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+n focus down
+# bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym mod4+Shift+h move left
+bindsym mod4+Shift+j move down
+bindsym mod4+Shift+k move up
+bindsym mod4+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+Ctrl+h split h
+
+# split in vertical orientation
+bindsym $mod+Ctrl+v split v
+
+
+# Define the volume control mode
+set $mode_volume Volume Mode
+
+# Enter volume control mode with Mod+v
+bindsym $mod+v mode "$mode_volume"
+
+# Volume control mode using pamixer
+mode "$mode_volume" {
+    bindsym j exec --no-startup-id pamixer --increase 15; 
+    bindsym k exec --no-startup-id pamixer --decrease 15; 
+    bindsym Escape mode "default"
+    bindsym $mod+v mode "default"
+}
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Define the brightness control mode
+set $mode_brightness Brightness Mode
+
+# Enter brightness control mode with Mod+b
+bindsym $mod+b mode "$mode_brightness"
+
+# Brightness control mode
+mode "$mode_brightness" {
+    bindsym j exec --no-startup-id brightnessctl set +15%
+    bindsym k exec --no-startup-id brightnessctl set 15%-
+    # bindsym k exec --no-startup-id bash -c 'current_brightness=$(brightnessctl get); max_brightness=$(brightnessctl max); min_brightness=$((max_brightness / 10)); if (( current_brightness > min_brightness )); then brightnessctl set 10%-; fi'
+
+    bindsym $mod+b mode "default"
+    bindsym Escape mode "default"
+}
+
+# focus the parent container
+bindsym $mod+a focus parent
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace using window key
+bindsym mod4+j workspace J
+bindsym mod4+k workspace K
+bindsym mod4+l workspace L
+bindsym mod4+a workspace A
+bindsym mod4+s workspace S
+bindsym mod4+d workspace D
+bindsym mod4+f workspace F
+
+# move focused container to workspace
+bindsym $mod+Shift+J move container to workspace J
+bindsym $mod+Shift+K move container to workspace K
+bindsym $mod+Shift+L move container to workspace L
+bindsym $mod+Shift+A move container to workspace A
+bindsym $mod+Shift+S move container to workspace S
+bindsym $mod+Shift+D move container to workspace D
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym mod4+p exec maim -s -u ~/screenshots/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png
+
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bar {
+    position bottom
+     font pango:Noto
+     status_command /home/dinesh/.nix-profile/bin/i3status-rs
+     # status_command /home/dev/.config/i3status-rust/config.toml
+
+}
+
+# ------------------------------------------
+# CUSTOM KEYS START
+# ------------------------------------------
+exec --no-startup-id nm-applet
+
+# Suspend
+bindsym $mod+Shift+i exec systemctl suspend
