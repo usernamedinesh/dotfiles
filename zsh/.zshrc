@@ -1,7 +1,11 @@
 #!/bin/zsh
-eval "$(starship init zsh)"
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
+
+# Starship
+eval "$(starship init zsh)"
+# set Starship PATH
+export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
 
 # Aliases
 alias vim='nvim'
@@ -22,6 +26,7 @@ alias gc='nix-shell /home/dev/script/shell.nix'
 alias status="/home/dinesh/lang/learn_bash/status.sh"
 alias ts="/home/dinesh/script/tmux_sessionaizer.sh"
 alias ta="/home/dinesh/script/tmux_switch_seesion.sh"
+alias tm="/home/dinesh/script/tm_session.sh"
 
 #exports
 export EDITOR=nvim
