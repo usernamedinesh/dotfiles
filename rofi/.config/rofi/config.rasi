@@ -1,0 +1,67 @@
+configuration{
+    modi: "run,window,drun";
+    icon-theme: "Oranchelo";
+    show-icons: true;
+    terminal: "wezterm";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-combi: " 🖥️  All ";
+    display-run: " 🏃  Run ";
+    display-drun: " Application";
+    display-window: " 🪟  Window";
+}
+
+
+@theme "catppuccin-mocha"
+
+* {
+    bg: #11121D;
+    bg-alt: #444b6a;
+
+    fg: #FFFFFF;
+    fg-alt: #787c99;
+    
+    background-color: @bg;
+
+    border: 0;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+ window {
+     width: 50%;
+ }
+
+ element {
+     padding: 12;
+     text-color: @fg-alt;
+ }
+
+ element selected {
+     text-color: @fg;
+ }
+ element-text {
+     background-color: inherit;
+     text-color: inherit;
+     vertical-align: 0.5;
+ }
+
+ element-icon {
+     size: 30;
+ }
+
+ entry {
+     background-color: @bg-alt;
+     padding: 2;
+     text-color: @fg;
+ }
+ inputbar {
+     children: [prompt, entry];
+ }
+ listview {
+     background-color: @bg;
+     columns: 1;
+     lines: 8;
+ }
