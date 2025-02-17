@@ -206,11 +206,9 @@ time_format = "%R"
 style = "bg:peach"
 format = '[[  $time ](fg:mantle bg:foam)]($style)'
 
-# [line_break]
-# disabled = false
-# [prompt]
-# line_breaks = 0
-#
+[line_break]
+disabled = true 
+
 [character]
 disabled = false
 success_symbol = '[𝘹](bold fg:green)'

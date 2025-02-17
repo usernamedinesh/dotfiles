@@ -32,6 +32,9 @@ history = 10000
 # Scrolling distance multiplier.
 multiplier = 3
 
+[terminal.shell]
+program= "/run/current-system/sw/bin/bash"
+args = ["--login", "-c", "/home/dinesh/script/session.sh"]
 
 [window]
  # opacity = 0.9
