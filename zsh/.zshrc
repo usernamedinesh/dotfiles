@@ -23,6 +23,7 @@ alias la='ls -a'
 alias ll='ls -la'
 alias e='exit'
 alias home='cd ~'
+alias c='cd'
 alias clr='clear'
 alias h='home'
 alias gs='git status'
@@ -33,11 +34,16 @@ alias ncon='cd /etc/nixos'
 alias gc='nix-shell /home/dinesh/script/shell.nix'
 
 alias ts="/home/dinesh/script/tmux_sessionaizer.sh"
-
 alias tm="/home/dinesh/script/tm_session.sh"
 alias tf="/home/dinesh/script/test.sh"
 alias tx='tmux new-session -s $(whoami)'
 alias ta='tmux a'
+alias s="./script/pick_session.sh"
+bindkey '^S' run_pic_session
+
+run_pic_session() {
+    ./script/pick_session.sh
+}
 
 #show branch
 get_git_branch() {
