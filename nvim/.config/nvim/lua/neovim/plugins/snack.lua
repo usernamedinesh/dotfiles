@@ -25,6 +25,18 @@ return {
 
         keys = {
 
+            {
+                "<leader>fi",
+                function()
+                    Snacks.picker.files({
+                        on_show = function()
+                            vim.cmd.stopinsert()
+                        end,
+                        cwd = "/home/dinesh/.config/i3"
+                    })
+                end,
+                desc = "Find Config File (i3)"
+            },
             { "<leader>,",  function() Snacks.picker.smart() end,                                   desc = "Smart Find Files" },
             { "<leader>/",  function() Snacks.picker.grep() end,                                    desc = "Grep" },
             { "<leader>:",  function() Snacks.picker.command_history() end,                         desc = "Command History" },

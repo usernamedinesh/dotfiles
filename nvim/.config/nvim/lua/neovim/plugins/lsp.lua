@@ -85,18 +85,71 @@ return {
         lspconfig["html"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
-            filetypes = { "html" },
+            filetypes = {
+                "templ",
+                "html",
+                "css",
+                "javascriptreact",
+                "typescriptreact",
+                "javascript",
+                "typescript",
+                "jsx",
+                "tsx",
+            },
         })
-        --
-        -- -- configure typescript server with plugin
-        lspconfig["ts_ls"].setup({
+        lspconfig.jsonls.setup({
+            on_attach = on_attach,
             capabilities = capabilities,
+        })
+        -- for nix
+        lspconfig.nil_ls.setup({
+            capabilities = capabilities,
+        })
+        --  configure typescript server with plugin
+        lspconfig["ts_ls"].setup({
+            -- capabilities = capabilities,
             on_attach = on_attach,
         })
+        local configs = require("lspconfig.configs")
 
+        if not configs.ts_ls then
+            configs.ts_ls = {
+                default_config = {
+                    cmd = { "typescript-language-server", "--stdio" },
+                    capabilties = capabilities,
+                    filetypes = {
+                        "javascript",
+                        "javascriptreact",
+                        "typescript",
+                        "typescriptreact",
+                        "html",
+                    },
+                    root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
+                    -- single_file_support = true,
+                },
+            }
+        end
+        lspconfig.eslint.setup({
+            capabilties = capabilities,
+        })
         lspconfig["clangd"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
+        })
+        lspconfig.emmet_language_server.setup({
+            capabilities = capabilities,
+            filetypes = {
+                "templ",
+                "html",
+                "css",
+                "javascriptreact",
+                "typescriptreact",
+                "javascript",
+                "typescript",
+                "jsx",
+                "tsx",
+                "markdown",
+            },
         })
 
         -- -- configure css server
