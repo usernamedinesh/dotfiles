@@ -1,6 +1,7 @@
 require("neovim.core.keymaps")
 require("neovim.core.settings")
 require("neovim.core.autocmd")
+require("neovim.core.Todo")
 -- require("neovim.core.cmd")
 require("neovim.lazy")
 

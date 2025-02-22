@@ -2,5 +2,6 @@
 pkgs.mkShell {
     buildInputs = [
         pkgs.gcc
+        pkgs.libX11
     ];
 }
