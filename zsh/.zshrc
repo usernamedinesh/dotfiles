@@ -33,6 +33,8 @@ alias dim='sudo docker images'
 alias ncon='cd /etc/nixos'
 alias gc='nix-shell /home/dinesh/script/shell.nix'
 
+alias zen="./bin/zen"
+
 alias ts="/home/dinesh/script/tmux_sessionaizer.sh"
 alias tm="/home/dinesh/script/tm_session.sh"
 alias tf="/home/dinesh/script/test.sh"
