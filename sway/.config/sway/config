@@ -1,0 +1,188 @@
+# Variables
+# Logo key. Use Mod1 for Alt. Mod4 for window key
+set $mod Mod1
+set $super Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+
+default_border none
+default_floating_border none
+
+ 
+set $opacity 0.9
+for_window [class=".*"] opacity $opacity
+# Transpent in all software
+for_window [app_id=".*"] opacity $opacity
+
+set $term alacritty
+# set $menu wmenu-run
+set $menu i3-dmenu-desktop 
+
+#Set wallpaper
+output * bg /home/dinesh/Desktop/wall/wallhaven-qz13pl_1920x1080.png fill
+
+# Example configuration:
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+#Sleep Using window + enter 
+bindsym $super+Return exec systemctl suspend
+
+
+#lock the sceen in 5m  
+#turn off all dispaly after 10m
+#befre turn off display lock 
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         before-sleep 'swaylock -f -c 000000'
+
+
+### Input configuration
+# Example configuration:
+#
+  input "2:14:SynPS/2_Synaptics_TouchPad" {
+      dwt enabled
+      tap enabled
+      natural_scroll enabled
+      middle_emulation enabled
+  }
+
+### Key bindings
+# Basics:
+    bindsym $mod+Return exec $term
+    bindsym $mod+q kill
+    bindsym $mod+d exec $menu
+    floating_modifier $mod normal
+    bindsym $mod+Shift+r reload
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Moving around:
+
+    bindsym $mod+j workspace prev
+    bindsym $mod+k workspace next
+
+# here $left and $right is the variable 
+    bindsym $mod+$left focus left
+    bindsym $mod+$right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+
+# Workspaces:
+# Define named workspaces
+    workspace A output eDP-1
+    workspace S output eDP-1
+    workspace D output eDP-1
+    workspace F output eDP-1
+    workspace J output eDP-1
+    workspace K output eDP-1
+    workspace L output eDP-1
+
+# Switch to workspace
+    bindsym $super+a workspace A
+    bindsym $super+s workspace S
+    bindsym $super+d workspace D
+    bindsym $super+f workspace F
+    bindsym $super+j workspace J
+    bindsym $super+k workspace K
+    bindsym $super+l workspace L
+
+# Move focused container to workspace
+    bindsym $mod+Shift+a move container to workspace A
+    bindsym $mod+Shift+s move container to workspace S
+    bindsym $mod+Shift+d move container to workspace D
+    bindsym $mod+Shift+f move container to workspace F
+    bindsym $mod+Shift+j move container to workspace J
+    bindsym $mod+Shift+k move container to workspace K
+    bindsym $mod+Shift+l move container to workspace L
+
+# Layout stuff:
+    # bindsym $mod+b splith
+    # bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    bindsym $mod+f fullscreen
+    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+space focus mode_toggle
+    bindsym $mod+a focus parent
+
+# Scratchpad:
+    # hide focus window 
+    bindsym $mod+Shift+minus move scratchpad
+    # view hide window in pop up
+    bindsym $mod+minus scratchpad show
+   # for advance usage
+    # for_window [app_id="Alacritty"] move scratchpad
+
+# Resizing containers:
+
+mode "resize" {
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+#For screenshot
+bindsym mod4+p exec maim -s -u ~/Desktop/ss/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png
+
+# Define the volume control mode
+set $mode_volume Volume Mode
+# Enter volume control mode with Mod+v
+bindsym $mod+v mode "$mode_volume"
+mode "$mode_volume" {
+    bindsym j exec --no-startup-id pamixer --increase 15; 
+    bindsym k exec --no-startup-id pamixer --decrease 15; 
+    bindsym Escape mode "default"
+    bindsym $mod+v mode "default"
+}
+
+# Define the brightness control mode
+set $mode_brightness Brightness Mode
+# Enter brightness control mode with Mod+b
+bindsym $mod+b mode "$mode_brightness"
+mode "$mode_brightness" {
+    bindsym j exec --no-startup-id brightnessctl set +15%
+    bindsym k exec --no-startup-id brightnessctl set 15%-
+
+    bindsym $mod+b mode "default"
+    bindsym Escape mode "default"
+}
+
+# Status Bar:
+bar {
+
+    status_command i3status
+    position bottom
+    # status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+include /etc/sway/config.d/*
