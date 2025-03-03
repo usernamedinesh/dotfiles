@@ -1,8 +1,8 @@
 general.import = [
-    "./themes/themes/xterm.toml"
+    # "./themes/themes/xterm.toml"
     # "./themes/themes/kimbie_dark.toml"
     # "./themes/themes/hyper.toml"
-    # "./themes/themes/chicago95.toml"
+    "./themes/themes/chicago95.toml"
     # "./themes/themes/blood_moon.toml"
 ]
 [colors]
@@ -19,10 +19,7 @@ TERM = "xterm-256color"
 
 [font]
 size = 15
-# [font.normal]
-# family= "Noto Sans"
 normal.family= "MesloLGS Nerd Font Mono"
-# style = "Regular"
 
 
 [scrolling]

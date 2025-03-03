@@ -17,6 +17,7 @@ for_window [class=".*"] opacity $opacity
 for_window [app_id=".*"] opacity $opacity
 
 set $term alacritty
+set $term2 ghostty
 # set $menu wmenu-run
 set $menu i3-dmenu-desktop 
 
@@ -53,6 +54,7 @@ exec swayidle -w \
 ### Key bindings
 # Basics:
     bindsym $mod+Return exec $term
+    bindsym $mod+p exec $term2
     bindsym $mod+q kill
     bindsym $mod+d exec $menu
     floating_modifier $mod normal
