@@ -6,6 +6,7 @@ ZSH_THEME="robbyrussell"
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
 
+export EDITOR=nvim
 export LANG=en_IN.UTF-8
 export LC_ALL=en_IN.UTF-8
 export PATH=$PATH:/run/current-system/sw/bin

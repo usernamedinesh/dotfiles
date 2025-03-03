@@ -45,7 +45,6 @@ local api = vim.api
 local autocmd = api.nvim_create_autocmd
 local cmd = vim.cmd
 local bo = vim.bo
-local opt_local = vim.opt_local
 
 autocmd("FileType", {
     desc = "Automatically Split help Buffers to the right",
@@ -69,43 +68,6 @@ autocmd({ "UIEnter", "ColorScheme" }, {
     end,
 })
 
-
--- Create or retrieve an autocommand group named "TerminalLocalOptions"
-local terminal = api.nvim_create_augroup("TerminalLocalOptions", { clear = true })
-
--- Terminal-specific settings for "TermOpen" event
-api.nvim_create_autocmd("TermOpen", {
-    group = terminal,
-    pattern = "*",
-    callback = function(event)
-        -- Disable cursorline for better terminal visibility
-        opt_local.cursorline = false
-        -- Hide line numbers in terminal buffers
-        vim.api.nvim_buf_set_option(event.buf, "number", false) -- Disable absolute line numbers
-        vim.api.nvim_buf_set_option(event.buf, "relativenumber", false)
-
-        -- Escape sequence for exiting terminal mode
-        local code_term_esc = api.nvim_replace_termcodes("<C-\\<C-n>", true, true, true)
-
-        -- Map <Ctrl-h/j/k/l> for navigating splits from terminal mode
-        for _, key in ipairs({ "h", "j", "k", "l" }) do
-            vim.keymap.set("t", "<C-" .. key .. ">", function()
-                local code_dir = api.nvim_replace_termcodes("<C-" .. key .. ">", true, true, true)
-                api.nvim_feedkeys(code_term_esc .. code_dir, "t", true)
-            end, { noremap = true, silent = true })
-        end
-
-        -- Set filetype to "terminal" if not already set
-        if bo.filetype == "" then
-            api.nvim_set_option_value("filetype", "terminal", { buf = event.buf })
-        end
-
-        -- Automatically start in insert mode if enabled
-        if vim.g.catgoose_terminal_enable_startinsert == 1 then
-            cmd("startinsert")
-        end
-    end,
-})
 
 -- highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -180,3 +142,37 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         end
     end,
 })
+
+
+
+-- Terminal
+vim.g.mapleader = " "
+local term_bufnr = -1
+
+-- Function to toggle terminal
+local function toggle_terminal()
+    if term_bufnr == -1 or not vim.api.nvim_buf_is_valid(term_bufnr) then
+        -- If no terminal exists or the buffer is invalid, create a new one
+        vim.cmd("belowright split | terminal")
+        term_bufnr = vim.api.nvim_get_current_buf()
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
+    else
+        local term_win = vim.fn.bufwinid(term_bufnr)
+        if term_win ~= -1 then
+            -- If terminal is visible, hide it (check if it's the only window)
+            if vim.fn.winnr("$") > 1 then
+                vim.api.nvim_win_close(term_win, true)
+            else
+                print("Cannot close the last window")
+            end
+        else
+            -- If terminal is hidden, show it
+            vim.cmd("belowright split")
+            vim.api.nvim_set_current_buf(term_bufnr)
+        end
+    end
+end
+
+-- Keymap for <leader>m
+vim.keymap.set("n", "<leader>m", toggle_terminal, { noremap = true, silent = true })

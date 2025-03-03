@@ -138,6 +138,5 @@ api("n", "<leader>wq", ":wq<CR>", { silent = true })
 set("n", "n", "nzzzv")
 set("n", "N", "Nzzzv")
 
-api('n', '<leader>ee', ':FzfLua<CR>', { noremap = true, silent = true })
-api('n', '<leader>rr', ':FZF<CR>', { noremap = true, silent = true })
--- set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
+set("n", "<leader>m", ":terminal<CR>", opt)
+set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
