@@ -6,6 +6,7 @@ set $left h
 set $down j
 set $up k
 set $right l
+font pango: Iosevka 10
 
 default_border none
 default_floating_border none
