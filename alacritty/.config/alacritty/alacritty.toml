@@ -3,7 +3,7 @@ general.import = [
     # "./themes/themes/kimbie_dark.toml"
     # "./themes/themes/hyper.toml"
     "./themes/themes/chicago95.toml"
-    # "./themes/themes/blood_moon.toml"
+    # "./themes/themes/github_dark_default.toml" #not bad also
 ]
 [colors]
 # draw_bold_text_with_bright_colors = true
@@ -18,8 +18,9 @@ TERM = "xterm-256color"
 # TERM: screen-256color
 
 [font]
-size = 15
-normal.family= "MesloLGS Nerd Font Mono"
+size = 17
+# normal.family= "MesloLGS Nerd Font Mono"
+normal.family= "Iosevka"
 
 
 [scrolling]
