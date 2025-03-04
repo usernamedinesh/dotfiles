@@ -134,7 +134,16 @@ return {
         })
         lspconfig["clangd"].setup({
             capabilities = capabilities,
+            cmd = { "clangd", "--background-index" },
+            filetypes = { "c", "cpp" },
+            root_dir = lspconfig.util.root_pattern(".clangd", ".git"),
+            settings = {
+                clangd = {
+                    fallbackFlags = { "-std=c17" }, -- Add any additional flags here
+                },
+            },
             on_attach = on_attach,
+
         })
         lspconfig.emmet_language_server.setup({
             capabilities = capabilities,
