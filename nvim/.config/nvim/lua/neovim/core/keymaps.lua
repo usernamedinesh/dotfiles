@@ -4,6 +4,7 @@ local set = vim.keymap.set
 local api = vim.api.nvim_set_keymap
 local opt = { noremap = true, silent = true }
 
+
 -- Making new file or navigating
 api('n', '<leader>n', ':e <Space>', { noremap = true })
 
