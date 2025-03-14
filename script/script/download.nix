@@ -1,3 +1,4 @@
+#nix-shell download.nix
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.mkShell {

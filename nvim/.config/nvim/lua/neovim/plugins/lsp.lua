@@ -30,14 +30,15 @@ return {
         local opts = { noremap = true, silent = true }
         local on_attach = function(client, bufnr)
             opts.buffer = bufnr
-            require "lsp_signature".on_attach(signature_setup, bufnr)
-            -- -- Ignore tsserver for .tsx files
-            -- local filetype = vim.bo.filetype
-            -- if filetype == 'typescriptreact' then
-            --     -- Detach tsserver from .tsx files
-            --     client.stop()
-            --     return
-            -- end
+
+
+            -- Attach LSP signature
+            require("lsp_signature").on_attach({
+                bind = true,
+                handler_opts = {
+                    border = "rounded",
+                },
+            }, bufnr)
 
             -- set keybinds
             opts.desc = "Show LSP references"
@@ -104,34 +105,76 @@ return {
         -- for nix
         lspconfig.nil_ls.setup({
             capabilities = capabilities,
+            on_attach = on_attach
         })
         --  configure typescript server with plugin
+        -- lspconfig["ts_ls"].setup({
+        --     capabilities = capabilities,
+        --     on_attach = on_attach,
+        -- })
+        -- Configure TypeScript server
         lspconfig["ts_ls"].setup({
-            -- capabilities = capabilities,
+            capabilities = capabilities,
             on_attach = on_attach,
-        })
-        local configs = require("lspconfig.configs")
-
-        if not configs.ts_ls then
-            configs.ts_ls = {
-                default_config = {
-                    cmd = { "typescript-language-server", "--stdio" },
-                    capabilties = capabilities,
-                    filetypes = {
-                        "javascript",
-                        "javascriptreact",
-                        "typescript",
-                        "typescriptreact",
-                        "html",
+            settings = {
+                typescript = {
+                    format = {
+                        enable = true,
                     },
-                    root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
-                    -- single_file_support = true,
+                    inlayHints = {
+                        includeInlayParameterNameHints = "all",
+                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                        includeInlayFunctionParameterTypeHints = true,
+                        includeInlayVariableTypeHints = true,
+                        includeInlayPropertyDeclarationTypeHints = true,
+                        includeInlayFunctionLikeReturnTypeHints = true,
+                        includeInlayEnumMemberValueHints = true,
+                    },
                 },
-            }
-        end
-        lspconfig.eslint.setup({
-            capabilties = capabilities,
+                javascript = {
+                    format = {
+                        enable = true,
+                    },
+                    inlayHints = {
+                        includeInlayParameterNameHints = "all",
+                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                        includeInlayFunctionParameterTypeHints = true,
+                        includeInlayVariableTypeHints = true,
+                        includeInlayPropertyDeclarationTypeHints = true,
+                        includeInlayFunctionLikeReturnTypeHints = true,
+                        includeInlayEnumMemberValueHints = true,
+                    },
+                },
+            },
         })
+
+        -- lspconfig.eslint.setup({
+        --     capabilties = capabilities,
+        -- })
+
+        -- configure emmet language server
+        -- lspconfig["emmet_ls"].setup({
+        --     capabilities = capabilities,
+        --     on_attach = on_attach,
+        --     filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+        -- })
+
+        -- lspconfig.emmet_language_server.setup({
+        --     capabilities = capabilities,
+        --     filetypes = {
+        --         "templ",
+        --         "html",
+        --         "css",
+        --         "javascriptreact",
+        --         "typescriptreact",
+        --         "javascript",
+        --         "typescript",
+        --         "jsx",
+        --         "tsx",
+        --         "markdown",
+        --     },
+        -- })
+
         lspconfig["clangd"].setup({
             capabilities = capabilities,
             cmd = { "clangd", "--background-index" },
@@ -144,21 +187,6 @@ return {
             },
             on_attach = on_attach,
 
-        })
-        lspconfig.emmet_language_server.setup({
-            capabilities = capabilities,
-            filetypes = {
-                "templ",
-                "html",
-                "css",
-                "javascriptreact",
-                "typescriptreact",
-                "javascript",
-                "typescript",
-                "jsx",
-                "tsx",
-                "markdown",
-            },
         })
 
         -- -- configure css server
@@ -208,12 +236,6 @@ return {
                 },
             },
         })
-        -- -- configure emmet language server
-        -- lspconfig["emmet_ls"].setup({
-        -- 	capabilities = capabilities,
-        -- 	on_attach = on_attach,
-        -- 	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-        -- })
 
         -- configure lua server (with special settings)
         lspconfig["lua_ls"].setup({

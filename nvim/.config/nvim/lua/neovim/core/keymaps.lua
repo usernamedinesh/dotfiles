@@ -25,6 +25,9 @@ set("v", "<leader>x", ":lua<CR>")
 set("n", "<S-f>", "<C-d>zz")
 set("n", "<S-h>", "<C-u>zz")
 
+vim.keymap.set('i', '<C-d>', '<Esc>dawi', { noremap = true, silent = true })
+set('n', '<C-d>', 'daw', { noremap = true, silent = true })
+
 set({ "n", "o", "x" }, "ss", "0", { desc = "Jump to beginning of line" })
 set({ "n", "o", "x" }, "e", "g_", { desc = "Jump to end of line" })
 
@@ -71,12 +74,12 @@ vim.keymap.set('n', '<A-;>', function()
 end)
 
 -- formate --
-set(
-    "n",
-    "fj",
-    "<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
-    { noremap = true, silent = true, desc = "Format" }
-)
+-- set(
+--     "n",
+--     "fj",
+--     "<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
+--     { noremap = true, silent = true, desc = "Format" }
+-- )
 
 -- Move normally between wrapped lines
 set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })

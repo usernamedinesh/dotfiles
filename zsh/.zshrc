@@ -73,7 +73,7 @@ get_prompt_dir() {
 }
 
 # Customize the prompt to show ✗ everywhere except home directory
-export PS1="${BLUE}➜ ${GREEN}\$(get_prompt_dir)${YELLOW}\$(get_git_branch)${RESET}\$(if [ \"\$PWD\" != \"\$HOME\" ]; then echo \" ${RED}✗\"; fi) "
+export PS1="${RED}🡪  ${GREEN}\$(get_prompt_dir)${YELLOW}\$(get_git_branch)${RESET}\$(if [ \"\$PWD\" != \"\$HOME\" ]; then echo \" ${RED}✗\"; fi) "
 # PROMPT='%F{green}➜ %F{blue}%~ %f$ ' # Custom prompt symbol and colors
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
