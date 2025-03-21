@@ -66,10 +66,19 @@ return {
     },
 
     -- Show key in screen -->
+    -- {
+    --     "NStefan002/screenkey.nvim",
+    --     lazy = false,
+    --     version = "*", -- or branch = "dev", to use the latest commit
+    -- },
     {
-        "NStefan002/screenkey.nvim",
-        lazy = false,
-        version = "*", -- or branch = "dev", to use the latest commit
+        "nvzone/showkeys",
+        cmd = "ShowkeysToggle",
+        opts = {
+            timeout = 1,
+            maxkeys = 5,
+            -- more opts
+        }
     },
     {
         "nvim-tree/nvim-web-devicons",

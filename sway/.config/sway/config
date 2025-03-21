@@ -10,8 +10,33 @@ font pango: Iosevka 10
 
 default_border none
 default_floating_border none
+#for hdmi
+# Enable both outputs
+output eDP-1 enable
+output HDMI-A-1 enable
 
+# Set modes (optional, use if you want different resolutions)
+# output eDP-1 mode 1920x1080@60.056
+# output HDMI-A-1 mode 1366x768@59.790
+
+# Position the screens (current setup is fine, but you can adjust)
+output eDP-1 position 0 0
+output HDMI-A-1 position 1920 0
+
+# Optional: Set the same scale factor if needed
+output eDP-1 scale 1.0
+output HDMI-A-1 scale 1.0
+
+# Toggle to laptop screen only
+bindsym $mod+Ctrl+1 exec swaymsg "output HDMI-A-1 disable; output eDP-1 enable; output eDP-1 mode 1920x1080@60.056; output eDP-1 position 0 0"
+
+# Toggle to HDMI screen only
+bindsym $mod+Ctrl+2 exec swaymsg "output eDP-1 disable; output HDMI-A-1 enable; output HDMI-A-1 mode 1366x768@59.790; output HDMI-A-1 position 0 0"
+
+# Toggle to both screens (extended)
+bindsym $mod+Ctrl+3 exec swaymsg "output eDP-1 enable; output HDMI-A-1 enable; output eDP-1 mode 1920x1080@60.056; output HDMI-A-1 mode 1366x768@59.790; output eDP-1 position 0 0; output HDMI-A-1 position 1920 0"
  
+
 set $opacity 0.9
 for_window [class=".*"] opacity $opacity
 # Transpent in all software
@@ -23,7 +48,7 @@ set $term2 ghostty
 set $menu i3-dmenu-desktop 
 
 #Set wallpaper
-output * bg /home/dinesh/Desktop/wall/wallhaven-qz13pl_1920x1080.png fill
+output * bg /home/dinesh/Desktop/wall/wallhaven-l85dqy_1920x1080.png fill
 
 # Example configuration:
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0

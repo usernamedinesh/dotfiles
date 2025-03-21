@@ -90,12 +90,6 @@ return {
                 "templ",
                 "html",
                 "css",
-                "javascriptreact",
-                "typescriptreact",
-                "javascript",
-                "typescript",
-                "jsx",
-                "tsx",
             },
         })
         lspconfig.jsonls.setup({
@@ -103,77 +97,42 @@ return {
             capabilities = capabilities,
         })
         -- for nix
-        lspconfig.nil_ls.setup({
+        lspconfig.rnix.setup({
             capabilities = capabilities,
             on_attach = on_attach
         })
-        --  configure typescript server with plugin
-        -- lspconfig["ts_ls"].setup({
-        --     capabilities = capabilities,
-        --     on_attach = on_attach,
-        -- })
-        -- Configure TypeScript server
+        -- configure typescript server with plugin
         lspconfig["ts_ls"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
-            settings = {
-                typescript = {
-                    format = {
-                        enable = true,
-                    },
-                    inlayHints = {
-                        includeInlayParameterNameHints = "all",
-                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                        includeInlayFunctionParameterTypeHints = true,
-                        includeInlayVariableTypeHints = true,
-                        includeInlayPropertyDeclarationTypeHints = true,
-                        includeInlayFunctionLikeReturnTypeHints = true,
-                        includeInlayEnumMemberValueHints = true,
-                    },
-                },
-                javascript = {
-                    format = {
-                        enable = true,
-                    },
-                    inlayHints = {
-                        includeInlayParameterNameHints = "all",
-                        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                        includeInlayFunctionParameterTypeHints = true,
-                        includeInlayVariableTypeHints = true,
-                        includeInlayPropertyDeclarationTypeHints = true,
-                        includeInlayFunctionLikeReturnTypeHints = true,
-                        includeInlayEnumMemberValueHints = true,
-                    },
-                },
-            },
         })
 
-        -- lspconfig.eslint.setup({
-        --     capabilties = capabilities,
-        -- })
+        lspconfig.eslint.setup({
+            capabilties = capabilities,
+        })
 
         -- configure emmet language server
-        -- lspconfig["emmet_ls"].setup({
-        --     capabilities = capabilities,
-        --     on_attach = on_attach,
-        --     filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-        -- })
+        lspconfig["emmet_ls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+        })
 
-        -- lspconfig.emmet_language_server.setup({
-        --     capabilities = capabilities,
-        --     filetypes = {
-        --         "templ",
-        --         "html",
-        --         "css",
-        --         "javascriptreact",
-        --         "typescriptreact",
-        --         "javascript",
-        --         "typescript",
-        --         "jsx",
-        --         "tsx",
-        --         "markdown",
-        --     },
-        -- })
+        lspconfig.emmet_language_server.setup({
+            capabilities = capabilities,
+            filetypes = {
+                "templ",
+                "html",
+                "css",
+                "javascriptreact",
+                "typescriptreact",
+                "javascript",
+                "typescript",
+                "jsx",
+                "tsx",
+                "markdown",
+            },
+        })
 
         lspconfig["clangd"].setup({
             capabilities = capabilities,
@@ -242,6 +201,11 @@ return {
             capabilities = capabilities,
             on_attach = on_attach,
             filetypes = { "lua" },
+        })
+        lspconfig["markdown_oxide"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "md", "markdown" },
         })
         lspconfig["zls"].setup({
             capabilities = capabilities,

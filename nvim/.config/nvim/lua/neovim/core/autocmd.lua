@@ -10,7 +10,8 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Enable screen key
 vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
-        vim.cmd("Screenkey")
+        -- vim.cmd("Screenkey")
+        vim.cmd("ShowkeysToggle")
     end,
 })
 -- vim.api.nvim_create_autocmd("BufReadPost", {

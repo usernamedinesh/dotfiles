@@ -34,10 +34,10 @@ return {
                 -- "eslint",
                 -- "clangd",
                 "jsonls",
-                "nil_ls",
                 -- "tailwindcss",
                 -- "yamlls",
                 -- "emmet_ls",
+                -- "prettierd"
             },
             automatic_installation = true,
         })

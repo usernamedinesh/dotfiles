@@ -111,7 +111,7 @@ return {
     { "morhetz/gruvbox",       name = "gruvbox" },
     { "folke/tokyonight.nvim", name = "tokyonight" },
     { "w0ng/vim-hybrid",       name = "hybrid" },
-    "i3d/vim-jimbothemes",
+    -- "i3d/vim-jimbothemes",
     "chrisbra/Colorizer",
     "lurst/austere.vim",
     { "blazkowolf/gruber-darker.nvim", name = "gruber-darker", config = ColorMyGruber },
