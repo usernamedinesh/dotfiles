@@ -8,6 +8,21 @@ set $up k
 set $right l
 font pango: Iosevka 10
 
+# input "*" {
+#     xkb_layout "us,custom_alt"
+#     xkb_variant ""
+#     # Optional: Remove if not needed
+#     xkb_options "grp:switch"
+# }
+# input "*" {
+#     xkb_layout "us,custom_alt"
+#     xkb_variant ""
+# }
+input "*" {
+    xkb_layout us
+    xkb_options "altwin:left_alt"
+}
+
 default_border none
 default_floating_border none
 #for hdmi
@@ -81,6 +96,8 @@ exec swayidle -w \
 input * {
     xkb_options caps:swapescape
 }
+# bindsym Alt_R exec notify-send "Right Alt pressed"
+bindsym Alt_R exec firefox
 
 #Check that left alt is 56 and right alt is 100
 bindsym $super+Alt_L exec notify-send "Left Alt (56) pressed"
