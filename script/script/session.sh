@@ -4,7 +4,7 @@
 USERNAME=$(whoami)
 
 # Define session names
-DEFAULT_SESSION="${USERNAME}-home"
+DEFAULT_SESSION="${USERNAME}"
 SESSION_PREFIX="term"
 
 # Function to check if a session exists
@@ -19,7 +19,7 @@ if ! session_exists "$DEFAULT_SESSION"; then
 fi
 
 # Try creating term2, term3, term4...
-for i in {2..4}; do
+for i in {1..3}; do
     NEW_SESSION="${SESSION_PREFIX}${i}"
     if ! session_exists "$NEW_SESSION"; then
         tmux new-session -s "$NEW_SESSION"
@@ -27,6 +27,6 @@ for i in {2..4}; do
     fi
 done
 
-echo "Error: Maximum number of sessions (home, term2, term3, term4) reached!"
+echo "Error: Maximum number of sessions (home, term1, term2, term3) reached!"
 exit 1
 

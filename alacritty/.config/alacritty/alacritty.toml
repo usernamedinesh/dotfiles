@@ -21,6 +21,10 @@ TERM = "xterm-256color"
 size = 17
 # normal.family= "MesloLGS Nerd Font Mono"
 normal.family= "Iosevka"
+offset.x = 0
+offset.y = 0
+glyph_offset.x = 0
+glyph_offset.y = 0
 
 
 [scrolling]
@@ -30,9 +34,9 @@ history = 10000
 # Scrolling distance multiplier.
 multiplier = 3
 
-[terminal.shell]
-program= "/run/current-system/sw/bin/bash"
-args = ["--login", "-c", "/home/dinesh/script/session.sh"]
+# [terminal.shell]
+# program= "/run/current-system/sw/bin/bash"
+# args = ["--login", "-c", "/home/dinesh/script/session.sh"]
 
 [window]
  # opacity = 0.9
@@ -43,9 +47,9 @@ decorations = "none"
 # Round corners
 # decorations = "buttonless"
 
-[window.padding]
-x = 3
-y = 7
+# [window.padding]
+# x = 3
+# y = 7
 
 [window.dimensions]
 columns = 185

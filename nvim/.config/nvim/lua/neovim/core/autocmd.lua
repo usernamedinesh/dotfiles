@@ -10,16 +10,11 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Enable screen key
 vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
-        -- vim.cmd("Screenkey")
+        -- vim.cmd("Screenkey") // i don"t user this now
         vim.cmd("ShowkeysToggle")
     end,
 })
--- vim.api.nvim_create_autocmd("BufReadPost", {
---     pattern = "*.js,*.ts",
---     callback = function()
---         -- Any logic here may cause interference, so remove it temporarily
---     end,
--- })
+
 -- Keep the cursor position when yanking
 local cursorPreYank
 

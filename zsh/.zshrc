@@ -10,6 +10,7 @@ export EDITOR=nvim
 export LANG=en_IN.UTF-8
 export LC_ALL=en_IN.UTF-8
 export PATH=$PATH:/run/current-system/sw/bin
+export LD_LIBRARY_PATH=/run/current-system/sw/bin/libnetcfg:$LD_LIBRARY_PATH
 # export TERM=xterm-256color
 
 export MANPATH=$MANPATH:$HOME/man
@@ -28,7 +29,8 @@ alias c='cd'
 alias clr='clear'
 alias h='home'
 alias gs='git status'
-alias ga='git commit'
+alias ga='git add .'
+alias gj='git commit'
 alias dps='sudo docker ps -a'
 alias dim='sudo docker images'
 alias ncon='cd /etc/nixos'
