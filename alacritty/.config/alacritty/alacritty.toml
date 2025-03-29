@@ -8,9 +8,14 @@ general.import = [
 [colors]
 # draw_bold_text_with_bright_colors = true
 
+
 [colors.cursor]
-cursor = "#FFFFFF"
-text = "#000000"
+# cursor = "#FFFFFF"
+# text = "#000000"
+text = "0x000000"  
+# cursor = "0x00ff00" 
+ # cursor = "0x00ffff" 
+ cursor = "0xffff00" 
 
 
 [env]
@@ -21,6 +26,9 @@ TERM = "xterm-256color"
 size = 17
 # normal.family= "MesloLGS Nerd Font Mono"
 normal.family= "Iosevka"
+bold.family = "Iosevka"
+italic.family = "Iosevka"
+
 offset.x = 0
 offset.y = 0
 glyph_offset.x = 0
