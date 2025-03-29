@@ -172,3 +172,13 @@ end
 
 -- Keymap for <leader>m
 vim.keymap.set("n", "<leader>m", toggle_terminal, { noremap = true, silent = true })
+
+
+-- This sets up the keymap only for gitcommit files
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "gitcommit",
+    callback = function()
+        -- Mapping q to quit the commit file
+        vim.api.nvim_buf_set_keymap(0, 'n', 'q', ':q!<CR>', { noremap = true, silent = true })
+    end
+})
