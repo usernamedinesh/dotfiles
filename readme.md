@@ -1,21 +1,32 @@
 #how to use stow
 
-.config/nvim       => nvim/.config/nvim
-.config/alacritty  => alacritty/.config/alacritty
-.zshrc             => zsh/.zshrc
+dotfiles/
+├── nvim/
+│   └── .config/
+│       └── nvim/
+│           ├── init.lua
+│           └── lua/
+├── alacritty/
+│   └── .config/
+│       └── alacritty/
+├── zsh/
+│   └── .zshrc
+└── tmux/
+    └── .tmux.conf
 
-command: 
-    mv .config/nvim /dotfiles/nvim/.config/
+# Move existing config files (if necessary)
+mv ~/.config/nvim /dotfiles/nvim/.config/
+mv ~/.config/alacritty /dotfiles/alacritty/.config/
+mv ~/.zshrc /dotfiles/zsh/.zshrc
 
-    dir(
-        dotfiles/
-          nvim/
-            .config/
-                nvim/
-                    init.lua
-                    lua/
-    )
-    cd dotfiles 
-        stow nvim (done)
-        stow tmux (done)
+# Navigate to the dotfiles directory
+cd /path/to/dotfiles
 
+# Install stow if necessary (for Ubuntu/Debian)
+sudo apt install stow
+
+# Stow configuration files
+stow nvim
+stow zsh
+stow alacritty
+stow tmux  # Optional, if you have a tmux config
